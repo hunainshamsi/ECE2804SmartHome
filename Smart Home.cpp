@@ -35,7 +35,7 @@ int16_t readTempSensor();
 int16_t readHumiditySensor();
 bool IntruderAlert();
 void NightLightSmart();
-void SpeakerAlert
+void SpeakerAlert();
 
 
 char  nightlight_status;
