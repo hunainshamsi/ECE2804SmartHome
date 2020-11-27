@@ -34,7 +34,8 @@ int16_t readTempSensor();
 int16_t readHumiditySensor();
 bool IntruderAlert();
 void NightLightSmart();
-void ClimateControl();
+void SpeakerAlert
+
 
 char  nightlight_status;
 String cont;
@@ -85,7 +86,7 @@ if (Serial.available()) {
 
 
 
-
+IntruderAlert();
 //Intruder alert output to bluetooth. Returns true if alert detected
 
 char intruder;
@@ -265,12 +266,13 @@ bool IntruderAlert() {
     if (digitalRead(3) == HIGH) {
         Serial.println("INTRUDER ALERT");  //for debugging purposes
         alert = true;
-        startPlayback(sample, sizeof(sample));
+        //startPlayback(sample, sizeof(sample));
+        SpeakerAlert();
     }
     else {
         Serial.println("ALL SYSTEMS NORMAL");
         alert = false;
-        stopPlayback();  
+        digitalWrite(11,LOW);
     }
     delay(1000);
 
@@ -305,7 +307,15 @@ void NightLightSmart() {
     delay(1000);
 }
 
+void SpeakerAlert(){
 
+    for(int i=1; i<2000; i=i+10){
+        digitalWrite(11,HIGH);
+        delayMicroSeconds(i);
+        digitalWrite(11,LOW);
+        delayMicroSeconds(i);
+    }
+}
 
 
 
