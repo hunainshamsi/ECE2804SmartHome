@@ -9,12 +9,15 @@
 #include <PCM.h>
 #include <SPI.h>
 #include <SD.h>
+#include <LiquidCrystal_I2C.h> 
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 
 //Initializations
@@ -99,7 +102,7 @@ else {
 }
 
 
-//TODO: Climate Control
+//Climate Control
 if (Serial.available()) {
     usertemp = Serial.read();
 
@@ -118,37 +121,54 @@ if (Serial.available()) {
    Serial.print(humidity); //debugging
    Serial.print("%");
    Serial.print("|");
-   Serial.print("intruder");
+   Serial.print(intruder);
 
 
-//OLED Display Outputs
-   //clear display
-   display.clearDisplay();
+//New LCD Display outputs
+ // Clear the display
+    lcd.clear();
+    
+    // Print temperature on top line
+lcd.setCursor(0,0);
+  lcd.print("Temp:  ");
+  lcd.print(temp);
+  lcd.print(" C");
+  
+  // Print humidity on bottom line
+  lcd.setCursor(0,1);
+  lcd.print("Humid: ");
+  lcd.print(humidity);
+  lcd.print(" %");
 
-   // display temperature
-   display.setTextSize(1);
-   display.setCursor(0, 0);
-   display.print("Temperature: ");
-   display.setTextSize(2);
-   display.setCursor(0, 10);
-   display.print(temp);
-   display.print(" ");
-   display.setTextSize(1);
-   display.cp437(true);
-   display.write(167);
-   display.setTextSize(2);
-   display.print("F");
 
-   // display humidity
-   display.setTextSize(1);
-   display.setCursor(0, 35);
-   display.print("Humidity: ");
-   display.setTextSize(2);
-   display.setCursor(0, 45);
-   display.print(humidity);
-   display.print("%");
+// //OLED Display Outputs
+//    //clear display
+//    display.clearDisplay();
 
-   display.display();
+//    // display temperature
+//    display.setTextSize(1);
+//    display.setCursor(0, 0);
+//    display.print("Temperature: ");
+//    display.setTextSize(2);
+//    display.setCursor(0, 10);
+//    display.print(temp);
+//    display.print(" ");
+//    display.setTextSize(1);
+//    display.cp437(true);
+//    display.write(167);
+//    display.setTextSize(2);
+//    display.print("F");
+
+//    // display humidity
+//    display.setTextSize(1);
+//    display.setCursor(0, 35);
+//    display.print("Humidity: ");
+//    display.setTextSize(2);
+//    display.setCursor(0, 45);
+//    display.print(humidity);
+//    display.print("%");
+
+//    display.display();
 
 }
 
