@@ -283,13 +283,13 @@ bool IntruderAlert() {
     bool alert = false;
 
     if (digitalRead(3) == HIGH) {
-        Serial.println("INTRUDER ALERT");  //for debugging purposes
+      //  Serial.println("INTRUDER ALERT");  //for debugging purposes
         alert = true;
         //startPlayback(sample, sizeof(sample));
         SpeakerAlert();
     }
     else {
-        Serial.println("ALL SYSTEMS NORMAL");
+       // Serial.println("ALL SYSTEMS NORMAL");
         alert = false;
         digitalWrite(11,LOW);
     }
