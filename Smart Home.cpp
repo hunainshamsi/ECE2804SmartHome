@@ -25,7 +25,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 int state = 0; //Bluetooth state
 int flag = 0; //bluetooth flag3
-int ThermistorPin = 1;
+int ThermistorPin = (A1);
 char recieve;
 
 /*const unsigned char sample[] PROGMEM = {
@@ -106,7 +106,7 @@ IntruderAlert();
 //Intruder alert output to bluetooth. Returns true if alert detected
 
 char intruder;
-if (IntruderAlert) {
+if (IntruderAlert()) {
     intruder = "ALERT";
 }
 else {
@@ -127,10 +127,10 @@ if (Serial.available()) {
 }
 
 //Bluetooth Outputs
-   Serial.print((float)temp);
+   Serial.print((int)temp);
    Serial.print("F");
    Serial.print("|");
-   Serial.print(humidity); //debugging
+   Serial.print((int)humidity); //debugging
    Serial.print("%");
    Serial.print("|");
    Serial.print(intruder);
@@ -208,19 +208,20 @@ void InitSensors() {
 int16_t readTempSensor()
 {
 
+
     float R0 = 10000;
     float R1 = 10000;
     float B = 3936000;
     float T0 = 297.15;
     float R, ln, T, F;
     int Vo;
-    Vo = analogRead(ThermistorPin);
+    Vo = analogRead(A1);
     R = R1 * (float)Vo / (1023 - (float)Vo); // resistance value of the thermistor
     ln = log(R / R0);
     T = 1 / ((ln / B) + (1 / T0)); // temperature value in Kelvin
     F = (1.8 * (T - 273.15)) + 32; // temperature value converted to Fahrenheit
 
-    return int (F);
+    return int(F);
 }
 
 int16_t readHumiditySensor()
