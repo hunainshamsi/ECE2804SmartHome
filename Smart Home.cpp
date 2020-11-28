@@ -61,7 +61,7 @@ void setup() {
     display.clearDisplay();
     //  display.setTextSize(1);
     display.setTextColor(WHITE);
-    display.setCursor(0, 0);
+   // display.setCursor(0, 0);
   
 }
 
@@ -220,7 +220,7 @@ int16_t readTempSensor()
     T = 1 / ((ln / B) + (1 / T0)); // temperature value in Kelvin
     F = (1.8 * (T - 273.15)) + 32; // temperature value converted to Fahrenheit
 
-    return F;
+    return int (F);
 }
 
 int16_t readHumiditySensor()
@@ -277,7 +277,7 @@ int16_t readHumiditySensor()
 
     delay(1000);
 
-    return output;
+    return int (output);
 }
 
 bool IntruderAlert() {
@@ -334,9 +334,9 @@ void SpeakerAlert(){
 
     for(int i=1; i<2000; i=i+10){
         digitalWrite(11,HIGH);
-        delayMicroSeconds(i);
+        delayMicroseconds(i);
         digitalWrite(11,LOW);
-        delayMicroSeconds(i);
+        delayMicroseconds(i);
     }
 }
 
