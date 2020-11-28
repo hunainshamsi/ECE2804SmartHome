@@ -71,8 +71,8 @@ void loop()
 {
 
 
-int16_t temp = readTempSensor();
-int16_t humidity = readHumiditySensor();
+uint16_t temp = readTempSensor();
+uint16_t humidity = readHumiditySensor();
 
 
 //Night Light Management
@@ -205,7 +205,7 @@ void InitSensors() {
 
 
 
-int16_t readTempSensor()
+uint16_t readTempSensor()
 {
 
 
@@ -224,7 +224,7 @@ int16_t readTempSensor()
     return int(F);
 }
 
-int16_t readHumiditySensor()
+uint16_t readHumiditySensor()
 {
     // Humidity sensor
     int ontime, offtime;
