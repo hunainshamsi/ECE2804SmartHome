@@ -115,7 +115,11 @@ else {
 
 
 //Climate Control
-if (Serial.available()) {
+
+if (Serial.available()){
+    climate = Serial.read();
+    if(climate=="AC_ON"){
+        if (Serial.available()) {
     usertemp = Serial.read();
 
     if (usertemp > temp) {
@@ -125,6 +129,11 @@ if (Serial.available()) {
         digitalWrite(5, HIGH);
     }
 }
+    }
+else if (climate == "AC_OFF")
+    digitalWrite(5,LOW);
+}
+
 
 //Bluetooth Outputs
    Serial.print((int)temp);
