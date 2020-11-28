@@ -12,12 +12,13 @@
 #include <LiquidCrystal_I2C.h> 
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+#define SCREEN_HEIGHT 32 // OLED display height, in pixels
+#define OLED_RESET -1
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+// LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 
 //Initializations
@@ -50,6 +51,17 @@ void setup() {
 
    Serial.begin(9600); //For communication with the app
    InitSensors(); //Function to initialize all sensors 
+   //OLED Display confugiration 
+    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
+      //for debugging purposes
+        Serial.println(F("SSD1306 allocation failed"));
+        for (;;);
+    }
+    delay(2000);
+    display.clearDisplay();
+    //  display.setTextSize(1);
+    display.setTextColor(WHITE);
+    display.setCursor(0, 0);
   
 }
 
@@ -124,51 +136,51 @@ if (Serial.available()) {
    Serial.print(intruder);
 
 
-//New LCD Display outputs
- // Clear the display
-    lcd.clear();
+// //New LCD Display outputs
+//  // Clear the display
+//     lcd.clear();
     
-    // Print temperature on top line
-lcd.setCursor(0,0);
-  lcd.print("Temp:  ");
-  lcd.print(temp);
-  lcd.print(" C");
+//     // Print temperature on top line
+// lcd.setCursor(0,0);
+//   lcd.print("Temp:  ");
+//   lcd.print(temp);
+//   lcd.print(" C");
   
-  // Print humidity on bottom line
-  lcd.setCursor(0,1);
-  lcd.print("Humid: ");
-  lcd.print(humidity);
-  lcd.print(" %");
+//   // Print humidity on bottom line
+//   lcd.setCursor(0,1);
+//   lcd.print("Humid: ");
+//   lcd.print(humidity);
+//   lcd.print(" %");
 
 
-// //OLED Display Outputs
-//    //clear display
-//    display.clearDisplay();
+//OLED Display Outputs
+   //clear display
+   display.clearDisplay();
 
-//    // display temperature
-//    display.setTextSize(1);
-//    display.setCursor(0, 0);
-//    display.print("Temperature: ");
-//    display.setTextSize(2);
-//    display.setCursor(0, 10);
-//    display.print(temp);
-//    display.print(" ");
-//    display.setTextSize(1);
-//    display.cp437(true);
-//    display.write(167);
-//    display.setTextSize(2);
-//    display.print("F");
+   // display temperature
+   display.setTextSize(1);
+   display.setCursor(0, 0);
+   display.print("Temperature: ");
+   display.setTextSize(2);
+   display.setCursor(0, 10);
+   display.print(temp);
+   display.print(" ");
+   display.setTextSize(1);
+   display.cp437(true);
+   display.write(167);
+   display.setTextSize(2);
+   display.print("F");
 
-//    // display humidity
-//    display.setTextSize(1);
-//    display.setCursor(0, 35);
-//    display.print("Humidity: ");
-//    display.setTextSize(2);
-//    display.setCursor(0, 45);
-//    display.print(humidity);
-//    display.print("%");
+   // display humidity
+   display.setTextSize(1);
+   display.setCursor(0, 35);
+   display.print("Humidity: ");
+   display.setTextSize(2);
+   display.setCursor(0, 45);
+   display.print(humidity);
+   display.print("%");
 
-//    display.display();
+   display.display();
 
 }
 
@@ -185,17 +197,7 @@ void InitSensors() {
     digitalWrite(3, LOW); //PIR
     digitalWrite(5, LOW); //set Climate Control LED to low
 
-    //OLED Display confugiration 
-    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
-      //for debugging purposes
-        Serial.println(F("SSD1306 allocation failed"));
-        for (;;);
-    }
-    delay(2000);
-    display.clearDisplay();
-    //  display.setTextSize(1);
-    display.setTextColor(WHITE);
-    // display.setCursor(0, 0);
+    
 
 
 }
