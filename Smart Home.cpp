@@ -71,8 +71,8 @@ void loop()
 {
 
 
-uint16_t temp = readTempSensor();
-uint16_t humidity = readHumiditySensor();
+int temp = readTempSensor();
+int humidity = readHumiditySensor();
 
 
 //Night Light Management
@@ -196,16 +196,11 @@ void InitSensors() {
     digitalWrite(2, LOW); //PIR 
     digitalWrite(3, LOW); //PIR
     digitalWrite(5, LOW); //set Climate Control LED to low
-
-    
-
-
 }
 
 
 
-
-uint16_t readTempSensor()
+int readTempSensor()
 {
 
 
@@ -224,7 +219,7 @@ uint16_t readTempSensor()
     return int(F);
 }
 
-uint16_t readHumiditySensor()
+int readHumiditySensor()
 {
     // Humidity sensor
     int ontime, offtime;
@@ -331,7 +326,7 @@ void NightLightSmart() {
     delay(1000);
 }
 
-void SpeakerAlert(){
+void SpeakerAlert() {
 
     for(int i=1; i<2000; i=i+10){
         digitalWrite(11,HIGH);
