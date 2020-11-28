@@ -233,7 +233,7 @@ int readHumiditySensor()
     period = ontime + offtime;
     freq = 1000000.0 / period;
 
-    switch (freq)
+    switch ((int)freq)
     {
     case 6210 ... 6304:
         interp = 85 + (freq - 6305) * ((95 - 85) / (6210 - 6305));
