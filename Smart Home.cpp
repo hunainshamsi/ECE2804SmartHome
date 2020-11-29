@@ -297,7 +297,7 @@ bool IntruderAlert() {
         //startPlayback(sample, sizeof(sample));
         SpeakerAlert();
     }
-    else {
+    else  {
        // Serial.println("ALL SYSTEMS NORMAL");
         alert = false;
         digitalWrite(11,LOW);
