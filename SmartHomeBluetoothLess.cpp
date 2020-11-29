@@ -43,25 +43,25 @@ void loop() {
     int light = analogRead(A0);
   int motion = digitalRead(2);
   
-  Serial.println(light); // print analogRead value for photocell (trouble shooting purposes)
-  Serial.println(motion); // print digitalRead value for PIR
+//   Serial.println(light); // print analogRead value for photocell (trouble shooting purposes)
+//   Serial.println(motion); // print digitalRead value for PIR
   
   // the LEDs only turn on if both of the conditions met (darkness and motion)
   // if it is dark
   if (light <= 100 && motion == HIGH) {
-    Serial.println("It is dark.");
+    //Serial.println("It is dark.");
     digitalWrite(8, HIGH); // turn right LED on
     digitalWrite(6, HIGH); // turn left LED on
   }
   // if there is low light
   else if (light > 100 && light < 250 && motion == HIGH) {
-    Serial.println("There is low light.");
+  //  Serial.println("There is low light.");
     digitalWrite(8, HIGH); // turn right LED on
     digitalWrite(6, LOW); // turn left LED off
   }
   // if it is bright
   else {
-    Serial.println("It is bright");
+  //  Serial.println("It is bright");
     digitalWrite(8, LOW); // turn right LED off
     digitalWrite(6, LOW); // turn left LED off
   }
@@ -83,8 +83,8 @@ void loop() {
 //    Serial.println(ontime);
 //    Serial.println(offtime);
    
-   Serial.print("Frequency: ");
-   Serial.println(freq);
+//    Serial.print("Frequency: ");
+//    Serial.println(freq);
 
    switch ((int)freq)
    {
@@ -123,7 +123,9 @@ void loop() {
    else {
    itoa(interp, output, 10);
    }
-   
+
+   Serial.println("Humidity: ")
+    Serial.print(output);
    delay(1000);
 
    //Thermistor
@@ -138,8 +140,8 @@ void loop() {
 //   Serial.print(Vo);
 //   Serial.print(" V"); 
 
-  Serial.println("  Temperature: "); 
-  Serial.println(F);
+  Serial.print("  Temperature: "); 
+  Serial.print(F);
   Serial.println(" F"); 
 
   delay(500);
@@ -156,6 +158,37 @@ void loop() {
         digitalWrite(11,LOW);
     }
     delay(1000);
+
+
+    //displays
+
+    //clear display
+  display.clearDisplay();
+
+  // display temperature
+  display.setTextSize(1);
+  display.setCursor(0,0);
+  display.print("Temperature: ");
+  display.setTextSize(2);
+  display.setCursor(0,10);
+  display.print(F);
+  display.print(" ");
+  display.setTextSize(1);
+  display.cp437(true);
+  display.write(167);
+  display.setTextSize(2);
+  display.print("F");
+  
+  // display humidity
+  display.setTextSize(1);
+  display.setCursor(0, 35);
+  display.print("Humidity: ");
+  display.setTextSize(2);
+  display.setCursor(0, 45);
+  display.print(output);
+  display.print(" %"); 
+  
+  display.display(); 
 
 }
 void SpeakerAlert(){
