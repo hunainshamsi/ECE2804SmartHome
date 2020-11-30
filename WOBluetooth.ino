@@ -20,9 +20,6 @@ float B = 3936000;
 float T0 = 297.15;
 float R, ln, T, F;
 
-
-
-
 void setup() {
  
 Serial.begin(9600);
@@ -136,8 +133,8 @@ void loop() {
    itoa(interp, output, 10);
    }
 
-   Serial.println("Humidity: ");
-    Serial.print(output);
+//   Serial.print("Humidity: ");
+//    Serial.println(output);
    delay(1000);
 
    //Thermistor
@@ -152,25 +149,32 @@ void loop() {
 //   Serial.print(Vo);
 //   Serial.print(" V"); 
 
-  Serial.print("  Temperature: "); 
-  Serial.print(F);
-  Serial.println(" F"); 
+//  Serial.print("  Temperature: "); 
+//  Serial.print(F);
+//  Serial.println(" F"); 
 
   delay(500);
 
   //Intruder
-
+  //char intruder[6] = "  ";
+if (Serial.available()) {
+  int receive = Serial.read();
+  Serial.println(receive);
+  if (receive == 1){
   if (digitalRead(3) == HIGH) {
-        //Serial.println("INTRUDER ALERT");  //for debugging purposes
+//        Serial.println("INTRUDER ALERT");  //for debugging purposes
         //startPlayback(sample, sizeof(sample));
+//        //intruder = "ALERT";
         SpeakerAlert();
     }
     else {
-        //Serial.println("ALL SYSTEMS NORMAL");
+//        Serial.println("ALL SYSTEMS NORMAL");
+        //intruder = "NORMAL";
         digitalWrite(11,LOW);
     }
+ }
     delay(1000);
-
+}
 
     //displays
 
@@ -201,6 +205,15 @@ void loop() {
   display.print(" %"); 
   
   display.display(); 
+
+  //Bluetooth Outputs
+   Serial.print(F);
+   Serial.print("F");
+   Serial.print("|");
+   Serial.print(output); //debugging
+   Serial.println("%");
+   Serial.print("|");
+   Serial.println("NORMAL");
 
 }
 void SpeakerAlert(){
