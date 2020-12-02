@@ -40,7 +40,7 @@ void setup() {
 Serial.begin(9600); //Serial communication initialize
   pinMode(8, OUTPUT); // digital pin 13 is configured as an output for the first LED (right)
   pinMode(6, OUTPUT); // digital pin 12 is configured as an output for the second LED (left)
-  pinMode(5,OUPUT); //Climate Control LED
+  pinMode(5,OUTPUT); //Climate Control LED
   pinMode(2, INPUT); // digital pin 2 is configured as an input for the PIR sensor
   pinMode(pin, INPUT); //Humidity
   pinMode(3, INPUT); //input for intruder alert PIR
@@ -70,53 +70,61 @@ int ac;
 
 void loop(){
         
- if (Serial.available()) {
+ if (Serial.available()>0) {
     receive = Serial.read();
-
+ 
 //TODO: NIGHTLIGHT
-if (receive == 2 || receive == 3 || receive == 4) {
+if (receive == '2' || receive == '3' || receive == '4') {
       nl = receive;
     }
     //Case ON
-if (nl == 2) {
+if (nl == '2') {
       digitalWrite(8, HIGH);
       digitalWrite(6, HIGH);
+      Serial.println("NL CASE ON");
     }
     //Case Smart
-     else if (nl == 3) {
+     else if (nl == '3') {
          NightLightSmart();
+         Serial.println("NL CASE s");
      }
     //Case Off
-else if (nl == 4) {
+else if (nl == '4') {
       digitalWrite(8, LOW);
       digitalWrite(6, LOW);
+      Serial.println("NL CASE off");
     }
 //TODO: INTRUDER
-if (receive == 1 || receive == 0) {
+if (receive == '1' || receive == '0') {
       intd = receive;
     }
     //case on
-    if(intd == 1){
+    if(intd == '1'){
        IntruderAlert();
+       Serial.println("int CASE ON");
     }
     //case off
-    if(intd == 0){
+    if(intd == '0'){
         digitalWrite(11,LOW);
+        Serial.println("int CASE off");        
     }
 //TODO: CLIMATE CONTROL
 
-if (receive == 5 || receive == 6) {
+if (receive == '5' || receive == '6') {
     ac = receive;
   }
   //case off
-  if(ac == 6){
+  if(ac == '6'){
       digitalWrite(5, LOW);
+      Serial.println("ac CASE Off");
   }
-  case on
-  if(ac == 5){
+//  case on
+  if(ac == '5'){
       digitalWrite(5, HIGH);
+      Serial.println("ac CASE ON");
   }
- } //End of Serial Availaible Loop
+}
+ //End of Serial Availaible Loop
 
 int IntruderReturn = IntruderAlert();
 
@@ -215,7 +223,7 @@ int IntruderReturn = IntruderAlert();
   }
   
 
-  delay(1000);
+  //delay(1000);
 
 
 
