@@ -1,5 +1,3 @@
-// Libraries
-
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -8,6 +6,13 @@
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
 #define OLED_RESET -1
+
+#define OFF 0
+#define ON 1
+#define TWO 2
+#define THREE 3
+#define FOUR 4
+#define FIVE 5
 
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
@@ -21,6 +26,7 @@ float T0 = 297.15;
 float R, ln, T, F;
 
 int output;
+char intruder;
 
 void setup() {
 
@@ -184,22 +190,42 @@ void loop() {
       intd = receive;
     }
 
-    //char intruder[6] = "  ";
-    if (receive == 0) {
-      if (digitalRead(3) == HIGH) {
-        //        Serial.println("INTRUDER ALERT");  //for debugging purposes
-        //startPlayback(sample, sizeof(sample));
-        //        //intruder = "ALERT";
-        SpeakerAlert();
-      }
-      else if (receive == 1) {
-        //        Serial.println("ALL SYSTEMS NORMAL");
-        //intruder = "NORMAL";
-        digitalWrite(11, LOW);
-      }
+    switch(intd){
+    case OFF: {
+        digitalWrite(11,LOW);
+        break;
     }
-    //delay(5000);
-  }
+    case ON:{
+        IntruderAlert();
+        break;
+    }
+    
+}
+
+//     //char intruder[6] = "  ";
+//     if (receive == 0) {
+//       if (digitalRead(3) == HIGH) {
+//         //        Serial.println("INTRUDER ALERT");  //for debugging purposes
+//         //startPlayback(sample, sizeof(sample));
+//         //        //intruder = "ALERT";
+//         SpeakerAlert();
+//       }
+//       else if (receive == 1) {
+//         //        Serial.println("ALL SYSTEMS NORMAL");
+//         //intruder = "NORMAL";
+//         digitalWrite(11, LOW);
+//       }
+//     }
+//     //delay(5000);
+//   }
+
+
+
+
+
+
+
+
 
   if (receive == 5 || receive == 6) {
     ac = receive;
@@ -264,7 +290,7 @@ void loop() {
   Serial.print(output); //debugging
   Serial.print("%");
   Serial.print("|");
-  Serial.println("NORMAL");
+  Serial.println(intruder);
 
   delay(1000);
 
@@ -278,3 +304,15 @@ void SpeakerAlert() {
     delayMicroseconds(i);
   }
 }
+
+void IntruderAlert(){
+
+if (digitalRead(3) == HIGH) {      
+        SpeakerAlert();
+        intruder = "ALERT";
+      }
+      else {
+        digitalWrite(11, LOW);
+        intruder = "NORMAL";
+      }
+    }
