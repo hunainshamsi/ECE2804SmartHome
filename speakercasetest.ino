@@ -34,6 +34,17 @@ void SpeakerAlert() {
   }
 }
 
+
+void IntruderAlert(){
+
+if (digitalRead(3) == HIGH) {      
+        SpeakerAlert();
+      }
+      else {
+        digitalWrite(11, LOW);
+      }
+    }
+
 void setup() {
   // put your setup code here, to run once:
 Serial.begin(9600);
@@ -50,7 +61,7 @@ switch(Read){
         break;
     }
     case ON:{
-        SpeakerAlert();
+        IntruderAlert();
         break;
     }
     
