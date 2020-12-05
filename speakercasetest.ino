@@ -43,7 +43,7 @@ if (digitalRead(3) == HIGH) {
       else {
         digitalWrite(11, LOW);
       }
-    }
+    }  
 
 void setup() {
   // put your setup code here, to run once:
