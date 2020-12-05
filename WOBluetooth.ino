@@ -28,7 +28,7 @@ float R, ln, T, F;
 int output;
 char intruder;
 
-void setup() {
+void setup() { 
 
   Serial.begin(9600);
   pinMode(8, OUTPUT); // digital pin 13 is configured as an output for the first LED (right)
